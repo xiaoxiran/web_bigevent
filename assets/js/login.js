@@ -1,14 +1,14 @@
 $(function () {
 	// console.log('ok');
 	// 点击去注册
-	$('#link_reg').on('click',function () {
+	$('#link_reg').on('click', function () {
 		// console.log('ok');
 		$('.reg-box').show();
 		$('.login-box').hide();
 	})
 
 	// 点击去登录
-	$('#link_login').on('click',function () {
+	$('#link_login').on('click', function () {
 		$('.reg-box').hide();
 		$('.login-box').show();
 	})
@@ -31,30 +31,30 @@ $(function () {
 	})
 	// 注册用户
 	//绑定submit事件
-	$('#form_reg').on('submit',function (e) {
+	$('#form_reg').on('submit', function (e) {
 		// 阻止默认行为
 		e.preventDefault();
 		// console.log('ok');
 		// 收集表达数据
-		var username =$('#form_reg [name=username]').val().trim();
+		var username = $('#form_reg [name=username]').val().trim();
 		var password = $('#form_reg [name=password]').val().trim();
 		var repassword = $('#form_reg [name=repassword]').val().trim();
-		console.log(username,password,repassword);
+		console.log(username, password, repassword);
 		// 发起ajax请求
 		$.ajax({
-			method:'post',
-			url:'/api/reguser',
-			data:{
+			method: 'post',
+			url: '/api/reguser',
+			data: {
 				username,
 				password
 			},
-			success(res){
+			success(res) {
 				// console.log(res);
 				// 判断是否成功
-				if (res.status!==0) {
-					return layui.layer.msg(res.message,{icon:5})
+				if (res.status !== 0) {
+					return layui.layer.msg(res.message, { icon: 5 })
 				}
-				layui.layer.msg(res.message,{icon:6},function () {
+				layui.layer.msg(res.message, { icon: 6 }, function () {
 					$('#link_login').click();
 				})
 			}
@@ -62,24 +62,26 @@ $(function () {
 		})
 	})
 	// 用户登录
-	$('#form_login').on('submit',function (e) {
+	$('#form_login').on('submit', function (e) {
 		// 阻止表单的默认提交
 		e.preventDefault();
 		// 获取表单数据
-		var data=$(this).serialize();
+		var data = $(this).serialize();
 		// console.log(data);
 		$.ajax({
-			method:'post',
-			url:'/api/login',
+			method: 'post',
+			url: '/api/login',
 			data,
-			success(res){
+			success(res) {
 				console.log(res);
-				if (res.status!==0) {
-					return layui.layer.msg(res.message,{icon:5})
+				if (res.status !== 0) {
+					return layui.layer.msg(res.message, { icon: 5 })
 				}
-				layui.layer.msg(res.message,{icon:6})
-				localStorage.setItem('token',res.token)
-				location.href='index.html'
+				layui.layer.msg(res.message, { icon: 6 }, function () {
+					localStorage.setItem('token', res.token)
+					location.href = '/index.html'
+				})
+
 			}
 		})
 
